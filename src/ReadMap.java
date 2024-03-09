@@ -35,7 +35,7 @@ public class ReadMap {
                     } else if (dir == Direction.LEFT) {
                         currentPos[1]--;
                     }
-
+                    System.out.print('-');
                     break;
 
                 case '|':
@@ -45,44 +45,53 @@ public class ReadMap {
                     } else if (dir == Direction.DONW) {
                         currentPos[0]++;
                     }
-
+                    System.out.print('|');
                     break;
 
                 case '/':
                     isNumber = false;
                     if (dir == Direction.RIGHT) {
                         currentPos[0]--;
+                        dir = Direction.UP;
                     } else if (dir == Direction.LEFT) {
                         currentPos[0]++;
+                        dir = Direction.DONW;
                     } else if (dir == Direction.UP) {
+                        dir = Direction.RIGHT;
                         currentPos[1]++;
                     } else if (dir == Direction.DONW) {
                         currentPos[1]--;
+                        dir = Direction.LEFT;
                     }
-
+                    System.out.print('/');
                     break;
 
                 case '\\':
                     isNumber = false;
                     if (dir == Direction.RIGHT) {
                         currentPos[0]++;
+                        dir = Direction.DONW;
                     } else if (dir == Direction.LEFT) {
                         currentPos[0]--;
+                        dir = Direction.UP;
                     } else if (dir == Direction.UP) {
                         currentPos[1]--;
+                        dir = Direction.LEFT;
                     } else if (dir == Direction.DONW) {
                         currentPos[1]++;
+                        dir = Direction.RIGHT;
                     }
-
+                    System.out.print('\\');
                     break;
 
                 case '#':
+                    System.out.println("Achou o fim!");
                     break;
 
                 default:
                     isNumber = true;
                     stringNum += currentChar;
-
+                    System.out.print(stringNum);
                     break;
             }
         }
@@ -99,7 +108,7 @@ public class ReadMap {
     }
 
     public char[][] getMap() {
-        String filePath = "D:\\SEMESTRE 3\\Alest II\\Trab1\\casos-cohen-noite\\casoG50.txt";
+        String filePath = "casos-cohen-noite\\casoG50.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
             int countNum = 0;
@@ -122,7 +131,9 @@ public class ReadMap {
             for (int row = 0; row < mapSize[0] - 1; row++) {
                 for (int col = 0; col < mapSize[1] - 1; col++) {
                     map[row][col] = (char) br.read();
+                    System.out.print(map[row][col]);
                 }
+                System.out.println();
             }
 
             return map;
