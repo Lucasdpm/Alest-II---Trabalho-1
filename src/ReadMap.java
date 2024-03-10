@@ -12,6 +12,11 @@ public class ReadMap {
         this.money = new ArrayList<Integer>();
 
         init();
+        int valorTotal = 0;
+        for (int money : this.money) {
+            valorTotal += money;
+        }
+        System.out.println(valorTotal);
     }
 
     public void init() {
@@ -24,9 +29,10 @@ public class ReadMap {
         Direction dir = Direction.RIGHT;
         boolean isNumber = false;
         String stringNum = "";
-        int number;
+        int number = 0;
+        boolean pathEnded = false;
 
-        while (currentChar != '#') {
+        while (!pathEnded) {
             switch (currentChar) {
                 case '-':
                     isNumber = false;
@@ -34,18 +40,24 @@ public class ReadMap {
                         currentPos[1]++;
                     } else if (dir == Direction.LEFT) {
                         currentPos[1]--;
+                    } else if (dir == Direction.UP) {
+                        currentPos[0]--;
+                    } else if (dir == Direction.DOWN) {
+                        currentPos[0]++;
                     }
-                    System.out.print('-');
                     break;
 
                 case '|':
                     isNumber = false;
-                    if (dir == Direction.UP) {
+                    if (dir == Direction.RIGHT) {
+                        currentPos[1]++;
+                    } else if (dir == Direction.LEFT) {
+                        currentPos[1]--;
+                    } else if (dir == Direction.UP) {
                         currentPos[0]--;
-                    } else if (dir == Direction.DONW) {
+                    } else if (dir == Direction.DOWN) {
                         currentPos[0]++;
                     }
-                    System.out.print('|');
                     break;
 
                 case '/':
@@ -55,45 +67,64 @@ public class ReadMap {
                         dir = Direction.UP;
                     } else if (dir == Direction.LEFT) {
                         currentPos[0]++;
-                        dir = Direction.DONW;
+                        dir = Direction.DOWN;
                     } else if (dir == Direction.UP) {
                         dir = Direction.RIGHT;
                         currentPos[1]++;
-                    } else if (dir == Direction.DONW) {
+                    } else if (dir == Direction.DOWN) {
                         currentPos[1]--;
                         dir = Direction.LEFT;
                     }
-                    System.out.print('/');
                     break;
 
                 case '\\':
                     isNumber = false;
                     if (dir == Direction.RIGHT) {
                         currentPos[0]++;
-                        dir = Direction.DONW;
+                        dir = Direction.DOWN;
                     } else if (dir == Direction.LEFT) {
                         currentPos[0]--;
                         dir = Direction.UP;
                     } else if (dir == Direction.UP) {
                         currentPos[1]--;
                         dir = Direction.LEFT;
-                    } else if (dir == Direction.DONW) {
+                    } else if (dir == Direction.DOWN) {
                         currentPos[1]++;
                         dir = Direction.RIGHT;
                     }
-                    System.out.print('\\');
                     break;
 
                 case '#':
-                    System.out.println("Achou o fim!");
+                    isNumber = false;
+                    pathEnded = true;
                     break;
 
                 default:
                     isNumber = true;
                     stringNum += currentChar;
-                    System.out.print(stringNum);
+
+                    if (dir == Direction.RIGHT) {
+                        currentPos[1]++;
+                    } else if (dir == Direction.LEFT) {
+                        currentPos[1]--;
+                    }
+                    if (dir == Direction.UP) {
+                        currentPos[0]--;
+                    } else if (dir == Direction.DOWN) {
+                        currentPos[0]++;
+                    }
                     break;
             }
+            if (!isNumber && !stringNum.equals("")) {
+                try {
+                    number = Integer.parseInt(stringNum);
+                } catch (Exception e) {
+                    System.out.println("ERRO: " + e);
+                }
+                money.add(number);
+                stringNum = "";
+            }
+            currentChar = map[currentPos[0]][currentPos[1]];
         }
     }
 
@@ -104,11 +135,11 @@ public class ReadMap {
             currentChar = map[row][0];
             row++;
         }
-        return row;
+        return row - 1;
     }
 
     public char[][] getMap() {
-        String filePath = "casos-cohen-noite\\casoG50.txt";
+        String filePath = "casos-cohen-noite\\casoG2000.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
             int countNum = 0;
@@ -117,7 +148,7 @@ public class ReadMap {
             while (countNum < 2) {
                 char currentChar = (char) br.read();
 
-                if (currentChar == ' ' || currentChar == '\n') {
+                if (currentChar == ' ' || currentChar == '\n' || currentChar == '\r') {
                     countNum++;
                 } else {
                     mapSizeString[countNum] += currentChar;
@@ -126,16 +157,17 @@ public class ReadMap {
             br.readLine();
 
             int[] mapSize = { Integer.parseInt(mapSizeString[0]), Integer.parseInt(mapSizeString[1]) };
-            char[][] map = new char[mapSize[0]][mapSize[1]];
+            char[][] map = new char[mapSize[0]][mapSize[1] + 1];
 
-            for (int row = 0; row < mapSize[0] - 1; row++) {
-                for (int col = 0; col < mapSize[1] - 1; col++) {
-                    map[row][col] = (char) br.read();
-                    System.out.print(map[row][col]);
+            char currentChar = 'A';
+            for (int row = 0; row < mapSize[0]; row++) {
+                for (int col = 0; col < mapSize[1] + 1; col++) {
+                    currentChar = (char) br.read();
+                    if (currentChar != '\n' || currentChar != '\r') {
+                        map[row][col] = currentChar;
+                    }
                 }
-                System.out.println();
             }
-
             return map;
 
         } catch (Exception error) {
