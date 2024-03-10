@@ -157,14 +157,16 @@ public class ReadMap {
             br.readLine();
 
             int[] mapSize = { Integer.parseInt(mapSizeString[0]), Integer.parseInt(mapSizeString[1]) };
-            char[][] map = new char[mapSize[0]][mapSize[1] + 1];
+            char[][] map = new char[mapSize[0]][mapSize[1]];
 
             char currentChar = 'A';
             for (int row = 0; row < mapSize[0]; row++) {
-                for (int col = 0; col < mapSize[1] + 1; col++) {
+                for (int col = 0; col < mapSize[1]; col++) {
                     currentChar = (char) br.read();
                     if (currentChar != '\n' && currentChar != '\r') {
                         map[row][col] = currentChar;
+                    } else {
+                        col--;
                     }
                 }
             }
