@@ -163,7 +163,7 @@ public class ReadMap {
             for (int row = 0; row < mapSize[0]; row++) {
                 for (int col = 0; col < mapSize[1] + 1; col++) {
                     currentChar = (char) br.read();
-                    if (currentChar != '\n' || currentChar != '\r') {
+                    if (currentChar != '\n' && currentChar != '\r') {
                         map[row][col] = currentChar;
                     }
                 }
