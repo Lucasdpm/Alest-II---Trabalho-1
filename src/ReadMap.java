@@ -6,9 +6,11 @@ public class ReadMap {
     private PathType pathType;
     private char[][] map;
     private ArrayList<Integer> money;
+    public int mapSizeCount;
+    public int mapFollowPathCount;
 
-    public ReadMap() {
-        this.map = getMap();
+    public ReadMap(int option) {
+        this.map = getMap(option);
         this.money = new ArrayList<Integer>();
 
         init();
@@ -16,7 +18,7 @@ public class ReadMap {
         for (int money : this.money) {
             valorTotal += money;
         }
-        System.out.println(valorTotal);
+        // System.out.println(valorTotal);
     }
 
     public void init() {
@@ -33,6 +35,8 @@ public class ReadMap {
         boolean pathEnded = false;
 
         while (!pathEnded) {
+            mapFollowPathCount++;
+
             switch (currentChar) {
                 case '-':
                     isNumber = false;
@@ -138,8 +142,36 @@ public class ReadMap {
         return row - 1;
     }
 
-    public char[][] getMap() {
-        String filePath = "casos-cohen-noite\\casoG2000.txt";
+    public char[][] getMap(int option) {
+        String filePath = "";
+        switch (option) {
+            case 0:
+                filePath = "casos-cohen-noite\\casoG50.txt";
+                break;
+            case 1:
+                filePath = "casos-cohen-noite\\casoG100.txt";
+                break;
+            case 2:
+                filePath = "casos-cohen-noite\\casoG200.txt";
+                break;
+            case 3:
+                filePath = "casos-cohen-noite\\casoG500.txt";
+                break;
+            case 4:
+                filePath = "casos-cohen-noite\\casoG750.txt";
+                break;
+            case 5:
+                filePath = "casos-cohen-noite\\casoG1000.txt";
+                break;
+            case 6:
+                filePath = "casos-cohen-noite\\casoG1500.txt";
+                break;
+            case 7:
+                filePath = "casos-cohen-noite\\casoG2000.txt";
+                break;
+            default:
+                break;
+        }
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
             int countNum = 0;
@@ -162,6 +194,8 @@ public class ReadMap {
             char currentChar = 'A';
             for (int row = 0; row < mapSize[0]; row++) {
                 for (int col = 0; col < mapSize[1]; col++) {
+                    mapSizeCount++;
+
                     currentChar = (char) br.read();
                     if (currentChar != '\n' && currentChar != '\r') {
                         map[row][col] = currentChar;
