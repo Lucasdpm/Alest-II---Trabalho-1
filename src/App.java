@@ -16,7 +16,7 @@ public class App {
                 // System.out.printf("%d; %d\n", rm.mapFollowPathCount + rm.mapSizeCount,
                 // delta);
                 sum += delta;
-                count = rm.mapFollowPathCount + rm.mapSizeCount;
+                count = rm.mapSizeCount();
             }
 
             System.out.printf("%d ; %d\n", count, sum / x);

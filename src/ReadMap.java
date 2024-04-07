@@ -3,10 +3,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class ReadMap {
-    private PathType pathType;
     private char[][] map;
     private ArrayList<Integer> money;
-    public int mapSizeCount;
     public int mapFollowPathCount;
 
     public ReadMap(int option) {
@@ -38,20 +36,7 @@ public class ReadMap {
             mapFollowPathCount++;
 
             switch (currentChar) {
-                case '-':
-                    isNumber = false;
-                    if (dir == Direction.RIGHT) {
-                        currentPos[1]++;
-                    } else if (dir == Direction.LEFT) {
-                        currentPos[1]--;
-                    } else if (dir == Direction.UP) {
-                        currentPos[0]--;
-                    } else if (dir == Direction.DOWN) {
-                        currentPos[0]++;
-                    }
-                    break;
-
-                case '|':
+                case '-', '|':
                     isNumber = false;
                     if (dir == Direction.RIGHT) {
                         currentPos[1]++;
@@ -194,7 +179,6 @@ public class ReadMap {
             char currentChar = 'A';
             for (int row = 0; row < mapSize[0]; row++) {
                 for (int col = 0; col < mapSize[1]; col++) {
-                    mapSizeCount++;
 
                     currentChar = (char) br.read();
                     if (currentChar != '\n' && currentChar != '\r') {
@@ -212,4 +196,8 @@ public class ReadMap {
 
         return null;
     }
+
+    public int mapTotalSizeCount(){return map.length*map.length;}
+
+    public int mapSizeCount(){return map.length;}
 }
