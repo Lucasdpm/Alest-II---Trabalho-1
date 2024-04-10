@@ -3,12 +3,12 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class ReadMap {
-    private PathType pathType;
     private char[][] map;
     private ArrayList<Integer> money;
+    public int mapFollowPathCount;
 
-    public ReadMap() {
-        this.map = getMap();
+    public ReadMap(int option) {
+        this.map = getMap(option);
         this.money = new ArrayList<Integer>();
 
         init();
@@ -16,7 +16,7 @@ public class ReadMap {
         for (int money : this.money) {
             valorTotal += money;
         }
-        System.out.println(valorTotal);
+        // System.out.println(valorTotal);
     }
 
     public void init() {
@@ -33,21 +33,10 @@ public class ReadMap {
         boolean pathEnded = false;
 
         while (!pathEnded) {
-            switch (currentChar) {
-                case '-':
-                    isNumber = false;
-                    if (dir == Direction.RIGHT) {
-                        currentPos[1]++;
-                    } else if (dir == Direction.LEFT) {
-                        currentPos[1]--;
-                    } else if (dir == Direction.UP) {
-                        currentPos[0]--;
-                    } else if (dir == Direction.DOWN) {
-                        currentPos[0]++;
-                    }
-                    break;
+            mapFollowPathCount++;
 
-                case '|':
+            switch (currentChar) {
+                case '-', '|':
                     isNumber = false;
                     if (dir == Direction.RIGHT) {
                         currentPos[1]++;
@@ -138,8 +127,36 @@ public class ReadMap {
         return row - 1;
     }
 
-    public char[][] getMap() {
-        String filePath = "casos-cohen-noite\\casoG2000.txt";
+    public char[][] getMap(int option) {
+        String filePath = "";
+        switch (option) {
+            case 0:
+                filePath = "casos-cohen-noite\\casoG50.txt";
+                break;
+            case 1:
+                filePath = "casos-cohen-noite\\casoG100.txt";
+                break;
+            case 2:
+                filePath = "casos-cohen-noite\\casoG200.txt";
+                break;
+            case 3:
+                filePath = "casos-cohen-noite\\casoG500.txt";
+                break;
+            case 4:
+                filePath = "casos-cohen-noite\\casoG750.txt";
+                break;
+            case 5:
+                filePath = "casos-cohen-noite\\casoG1000.txt";
+                break;
+            case 6:
+                filePath = "casos-cohen-noite\\casoG1500.txt";
+                break;
+            case 7:
+                filePath = "casos-cohen-noite\\casoG2000.txt";
+                break;
+            default:
+                break;
+        }
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
             int countNum = 0;
@@ -162,6 +179,7 @@ public class ReadMap {
             char currentChar = 'A';
             for (int row = 0; row < mapSize[0]; row++) {
                 for (int col = 0; col < mapSize[1]; col++) {
+
                     currentChar = (char) br.read();
                     if (currentChar != '\n' && currentChar != '\r') {
                         map[row][col] = currentChar;
@@ -178,4 +196,8 @@ public class ReadMap {
 
         return null;
     }
+
+    public int mapTotalSizeCount(){return map.length*map.length;}
+
+    public int mapSizeCount(){return map.length;}
 }
