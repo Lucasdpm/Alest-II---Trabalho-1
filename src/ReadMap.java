@@ -128,31 +128,31 @@ public class ReadMap {
     }
 
     public char[][] getMap(int option) {
-        String filePath = "";
+        String filePath = "casos/";
         switch (option) {
             case 0:
-                filePath = "casos-cohen-noite\\casoG50.txt";
+                filePath += "casoG50.txt";
                 break;
             case 1:
-                filePath = "casos-cohen-noite\\casoG100.txt";
+                filePath += "casoG100.txt";
                 break;
             case 2:
-                filePath = "casos-cohen-noite\\casoG200.txt";
+                filePath += "casoG200.txt";
                 break;
             case 3:
-                filePath = "casos-cohen-noite\\casoG500.txt";
+                filePath += "casoG500.txt";
                 break;
             case 4:
-                filePath = "casos-cohen-noite\\casoG750.txt";
+                filePath += "casoG750.txt";
                 break;
             case 5:
-                filePath = "casos-cohen-noite\\casoG1000.txt";
+                filePath += "casoG1000.txt";
                 break;
             case 6:
-                filePath = "casos-cohen-noite\\casoG1500.txt";
+                filePath += "casoG1500.txt";
                 break;
             case 7:
-                filePath = "casos-cohen-noite\\casoG2000.txt";
+                filePath += "casoG2000.txt";
                 break;
             default:
                 break;

@@ -2,7 +2,7 @@ public class App {
     public static void main(String args[]) {
         // passa por todos os arquivos de diferentes tamanhos
         for (int option = 0; option < 8; option++) {
-            int x = 1000;
+            int x = 100;
 
             int count = 0;
             long sum = 0;
@@ -13,8 +13,6 @@ public class App {
                 long end = System.nanoTime();
 
                 long delta = end - start;
-                // System.out.printf("%d; %d\n", rm.mapFollowPathCount + rm.mapSizeCount,
-                // delta);
                 sum += delta;
                 count = rm.mapSizeCount();
             }
